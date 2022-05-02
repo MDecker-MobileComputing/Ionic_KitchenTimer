@@ -25,7 +25,7 @@ export class HomePage {
    *
    * @param minutes Laufzeit des Timers in Minuten
    */
-  public async onBegruessenButton(minuten: number) {
+  public async onButtonGeklickt(minuten: number) {
 
     this.timerEinplanen(minuten);
 
