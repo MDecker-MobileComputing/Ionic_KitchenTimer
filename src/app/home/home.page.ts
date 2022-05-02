@@ -9,17 +9,21 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 })
 export class HomePage {
 
-  readonly MILLISECONDS_PRO_MINUTE = 60 * 1000;
+  /** Eine Minute hat 60.000 Millisekunden. */
+  //readonly MILLISECONDS_PRO_MINUTE = 60 * 1000;
+
+  /** Für Testzwecke soll eine Minute nur eine Sekunden lang sein. */
+  readonly MILLISECONDS_PRO_MINUTE = 1000;
 
   /**
    * Konstruktor für *Dependency Injection*.
-   */  
+   */
   constructor(private toastController: ToastController) {}
 
   /**
    * Event-Handler-Methode für Buttons um Timer einzuplanen.
-   * 
-   * @param minutes Laufzeit des Timers
+   *
+   * @param minutes Laufzeit des Timers in Minuten
    */
   public async onBegruessenButton(minuten: number) {
 
@@ -31,37 +35,37 @@ export class HomePage {
   /**
    * Methode zur eigentlichen Einplanung des Timers.
    * Siehe auch Konfiguration in Datei `capacitor.config.json`.
-   * 
-   * @param minuten Laufzeit des Timers
+   *
+   * @param minuten Laufzeit des Timers in Minuten
    */
   private async timerEinplanen(minuten: number) {
 
     const id = Math.floor((Math.random() * 100) + 1);
 
     const nowMillis = Date.now();
-    const atMillis = nowMillis + minuten*this.MILLISECONDS_PRO_MINUTE;
-    const atDate = new Date(atMillis);
+    const atMillis  = nowMillis + minuten*this.MILLISECONDS_PRO_MINUTE;
+    const atDate    = new Date(atMillis);
 
     await LocalNotifications.schedule({ notifications:
       [{
-              id: id,
-              title: "Küchen-Timer",
-              body: `Die ${minuten} Minuten sind um.`,
-              schedule: { at: atDate },                                
-              sound: 'notification.wav' // On Android, the file should be in res/raw folder. Recommended format is .wav because is supported by both iOS and Android
-        }]
+          id: id,
+          title: "Küchen-Timer",
+          body: `Die ${minuten} Minuten sind um.`,
+          schedule: { at: atDate }
+       }]
      });
-     
+
+     console.log(`Timer für ${atDate} wurde eingeplant.`);
   }
 
   /**
-   * Hilfsmethode für Anzeige eines Toasts.
-   * 
+   * Hilfsmethode für Anzeige einer Nachricht mit einem Toast.
+   *
    * @param nachricht In Toast anzuzeigender Text
    */
   private async zeigeToast(nachricht: string) {
 
-    const toast = await this.toastController.create({    
+    const toast = await this.toastController.create({
       message : nachricht,
       duration: 2000  // 2000 ms = 2 seconds
     });
