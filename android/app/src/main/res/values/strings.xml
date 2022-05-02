@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">kuechentimer</string>
+    <string name="app_name">Küchen-Timer</string>
     <string name="title_activity_main">kuechentimer</string>
     <string name="package_name">de.mide.ionic.kuechentimer</string>
     <string name="custom_url_scheme">de.mide.ionic.kuechentimer</string>
