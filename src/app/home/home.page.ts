@@ -40,6 +40,9 @@ export class HomePage {
    */
   private async timerEinplanen(minuten: number) {
 
+    const hatBerechtigung = await this.pruefeBerechtigung();
+    console.log(`Hat Berechtigung für lokale Notifikationen: ${hatBerechtigung}`);
+
     const id = Math.floor((Math.random() * 100) + 1);
 
     const nowMillis = Date.now();
@@ -56,6 +59,37 @@ export class HomePage {
      });
 
      console.log(`Timer für ${atDate} wurde eingeplant.`);
+  }
+
+  /**
+   * Unmittelbar vor Abschicken einer lokalen Notifikation sollte
+   *
+   * @return `true` gdw. die App die Berechtigung für lokale Notifikationen hat
+   */
+  private pruefeBerechtigung(): Promise<boolean> {
+
+    return LocalNotifications.checkPermissions().then((res) => {
+
+      if (res && res.display && res.display === "denied") {
+
+        LocalNotifications.requestPermissions().then((res) => {
+
+          if (res && res.display && res.display === "denied") {
+
+            this.zeigeToast("Es können keine Timer erzeugt werden, weil die Berechtigung verweigert wurde.");
+            return false;
+
+          } else {
+
+            return true;
+          }
+        });
+
+      } else {
+
+        return true;
+      }
+    });
   }
 
   /**
