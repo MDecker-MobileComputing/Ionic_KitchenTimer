@@ -1,0 +1,6 @@
+{
+	"appId": "de.mide.ionic.kuechentimer",
+	"appName": "kuechentimer",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
