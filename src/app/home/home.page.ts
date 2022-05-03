@@ -2,6 +2,12 @@ import { Component } from '@angular/core';
 import { ToastController, Platform } from '@ionic/angular';
 import { LocalNotifications } from '@capacitor/local-notifications';
 
+/**
+ * Seite mit Buttons um einen Küchen-Timer zu starten, Demo für Verwendung von lokalen Notifikationen.<br>
+ * <br>
+ * 
+ * Doku zu Capacitor-Plugin "local-notifications": https://capacitorjs.com/docs/apis/local-notifications
+ */
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -15,11 +21,13 @@ export class HomePage {
   /** Für Testzwecke soll eine Minute nur eine Sekunden lang sein. */
   readonly MILLISECONDS_PRO_MINUTE = 1000;
 
+
   /**
    * Konstruktor für *Dependency Injection*.
    */
   constructor(private toastController: ToastController,
               private platform: Platform) {}
+
 
   /**
    * Event-Handler-Methode für Buttons zur Einplanung eines Timers.
@@ -41,20 +49,25 @@ export class HomePage {
 
     this.timerEinplanen(minuten);
 
-    //this.zeigeToast(`Timer mit ${minuten} Minuten Laufzeit gestartet.`);
+    this.zeigeToast(`Timer mit ${minuten} Minuten Laufzeit gestartet.`);
   }
 
   /**
    * Prüft ob App gerade auf einem System / in einer Umgebungs ausgeführt
    * wird, in der lokale Notifikationen zur Verfügung stehen.
+   * 
    * @returns `true` gdw. die App auf einem System ausgeführt wird,
    *          auf dem lokale Notifikationen möglich sind (vorerst
    *          nur auf einem Android-Gerät)
    */
   private istPlatformOkay(): boolean {
 
-    const platformsArray = this.platform.platforms();
-    this.zeigeToast(`platformsArray: ${platformsArray}`);
+    const platformsArray = this.platform.platforms();     
+    // Array enthält nur "desktop", wenn die App mit "ionic serve" ausgeführt wird.
+    // Wenn die App im Emulator läuft, dann enthält der Array die folgenden Werte:
+    // "android", "cordova", "capacitor", "desktop", "hybrid"
+
+    //this.zeigeToast(`platformsArray: ${platformsArray}`);
 
     if (platformsArray.includes("android")) {
 
@@ -62,6 +75,7 @@ export class HomePage {
 
     } else {
 
+      console.log(`Betriebssysteme: ${platformsArray}`);
       this.zeigeToast("Auf dem aktuellen Betriebssystem werden keine lokalen Notifikationen unterstützt.");
       return false;
     }
@@ -69,7 +83,7 @@ export class HomePage {
 
   /**
    * Methode zur eigentlichen Einplanung des Timers.
-   * Siehe auch Konfiguration in Datei `capacitor.config.json`.
+   * Es sind auch noch Konfigurationen in der Datei `capacitor.config.json` möglich.
    *
    * @param minuten Laufzeit des Timers in Minuten
    */
@@ -86,7 +100,8 @@ export class HomePage {
           id: id,
           title: "Küchen-Timer",
           body: `Die ${minuten} Minuten sind um.`,
-          schedule: { at: atDate }
+          schedule: { at: atDate,
+                      allowWhileIdle: true }
        }]
      });
 
