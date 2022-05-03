@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { ToastController, Platform } from '@ionic/angular';
 import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Component({
@@ -18,18 +18,53 @@ export class HomePage {
   /**
    * Konstruktor für *Dependency Injection*.
    */
-  constructor(private toastController: ToastController) {}
+  constructor(private toastController: ToastController,
+              private platform: Platform) {}
 
   /**
-   * Event-Handler-Methode für Buttons um Timer einzuplanen.
+   * Event-Handler-Methode für Buttons zur Einplanung eines Timers.
    *
    * @param minutes Laufzeit des Timers in Minuten
    */
   public async onButtonGeklickt(minuten: number) {
 
+    if (this.istPlatformOkay() == false) {
+
+      return;
+    }
+
+    const hatBerechtigung = await this.pruefeBerechtigung();
+    if (hatBerechtigung === false) {
+
+      return;
+    }
+
     this.timerEinplanen(minuten);
 
-    this.zeigeToast(`Timer mit ${minuten} Minuten Laufzeit gestartet.`);
+    //this.zeigeToast(`Timer mit ${minuten} Minuten Laufzeit gestartet.`);
+  }
+
+  /**
+   * Prüft ob App gerade auf einem System / in einer Umgebungs ausgeführt
+   * wird, in der lokale Notifikationen zur Verfügung stehen.
+   * @returns `true` gdw. die App auf einem System ausgeführt wird,
+   *          auf dem lokale Notifikationen möglich sind (vorerst
+   *          nur auf einem Android-Gerät)
+   */
+  private istPlatformOkay(): boolean {
+
+    const platformsArray = this.platform.platforms();
+    this.zeigeToast(`platformsArray: ${platformsArray}`);
+
+    if (platformsArray.includes("android")) {
+
+      return true;
+
+    } else {
+
+      this.zeigeToast("Auf dem aktuellen Betriebssystem werden keine lokalen Notifikationen unterstützt.");
+      return false;
+    }
   }
 
   /**
@@ -39,9 +74,6 @@ export class HomePage {
    * @param minuten Laufzeit des Timers in Minuten
    */
   private async timerEinplanen(minuten: number) {
-
-    const hatBerechtigung = await this.pruefeBerechtigung();
-    console.log(`Hat Berechtigung für lokale Notifikationen: ${hatBerechtigung}`);
 
     const id = Math.floor((Math.random() * 100) + 1);
 
@@ -62,7 +94,9 @@ export class HomePage {
   }
 
   /**
-   * Unmittelbar vor Abschicken einer lokalen Notifikation sollte
+   * Unmittelbar vor Abschicken einer lokalen Notifikation sollte; erst ab
+   * Android 13 (API-Level 33, "Tiramisu") relevant:
+   * https://developer.android.com/about/versions/13/changes/notification-permission
    *
    * @return `true` gdw. die App die Berechtigung für lokale Notifikationen hat
    */
