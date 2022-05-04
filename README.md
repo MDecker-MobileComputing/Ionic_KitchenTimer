@@ -1,6 +1,6 @@
 # Ionic-App "Küchen-Timer" (kitchen timer) #
 
-Simple Ionic app to demonstrate usage of plugin [capacitor/local-notifications](https://capacitorjs.com/docs/apis/local-notifications).
+Simple [Ionic](https://ionicframework.com/) app with [Capacitor](https://capacitorjs.com/docs) to demonstrate the usage of the plugin for [local-notifications](https://capacitorjs.com/docs/apis/local-notifications).
 
 <br>
 
