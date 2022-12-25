@@ -114,7 +114,7 @@ export class HomePage {
    * https://developer.android.com/about/versions/13/changes/notification-permission
    *
    * @return `true` gdw. die App die Berechtigung für lokale Notifikationen hat
-   */
+   */  
   private pruefeBerechtigung(): Promise<boolean> {
 
     return LocalNotifications.checkPermissions().then((res) => {
@@ -138,6 +138,8 @@ export class HomePage {
 
         return true;
       }
+
+      return false;
     });
   }
 
