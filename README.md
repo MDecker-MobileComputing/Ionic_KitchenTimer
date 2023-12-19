@@ -1,4 +1,4 @@
-# Ionic-App "Küchen-Timer" (kitchen timer) #
+# Ionic-App "Küchen-Timer" (Titchen Timer) #
 
 <br>
 
