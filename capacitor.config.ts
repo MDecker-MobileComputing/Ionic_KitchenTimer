@@ -4,7 +4,9 @@ const config: CapacitorConfig = {
   appId: 'de.mide.ionic.kuechentimer',
   appName: 'Küchen-Timer',
   webDir: 'www',
-  bundledWebRuntime: false
+  server: {
+    androidScheme: 'https'
+  }
 };
 
 export default config;

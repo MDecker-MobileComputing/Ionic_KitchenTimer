@@ -5,7 +5,7 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 /**
  * Seite mit Buttons um einen Küchen-Timer zu starten, Demo für Verwendung von lokalen Notifikationen.<br>
  * <br>
- * 
+ *
  * Doku zu Capacitor-Plugin "local-notifications": https://capacitorjs.com/docs/apis/local-notifications
  */
 @Component({
@@ -32,9 +32,12 @@ export class HomePage {
   /**
    * Event-Handler-Methode für Buttons zur Einplanung eines Timers.
    *
-   * @param minutes Laufzeit des Timers in Minuten
+   * @param minutenStr Laufzeit des Timers in Minuten als String
+   *                   (seit Ionic 7 funktioniert es nicht mehr mit `number`)
    */
-  public async onButtonGeklickt(minuten: number) {
+  public async onButtonGeklickt( minutenStr: string) {
+
+    let minuten: number = parseInt(minutenStr);
 
     if (this.istPlatformOkay() == false) {
 
@@ -52,17 +55,18 @@ export class HomePage {
     this.zeigeToast(`Timer mit ${minuten} Minuten Laufzeit gestartet.`);
   }
 
+
   /**
    * Prüft ob App gerade auf einem System / in einer Umgebungs ausgeführt
    * wird, in der lokale Notifikationen zur Verfügung stehen.
-   * 
+   *
    * @returns `true` gdw. die App auf einem System ausgeführt wird,
    *          auf dem lokale Notifikationen möglich sind (vorerst
    *          nur auf einem Android-Gerät)
    */
   private istPlatformOkay(): boolean {
 
-    const platformsArray = this.platform.platforms();     
+    const platformsArray = this.platform.platforms();
     // Array enthält nur "desktop", wenn die App mit "ionic serve" ausgeführt wird.
     // Wenn die App im Emulator läuft, dann enthält der Array die folgenden Werte:
     // "android", "cordova", "capacitor", "desktop", "hybrid"
@@ -80,6 +84,7 @@ export class HomePage {
       return false;
     }
   }
+
 
   /**
    * Methode zur eigentlichen Einplanung des Timers.
@@ -108,13 +113,14 @@ export class HomePage {
      console.log(`Timer für ${atDate} wurde eingeplant.`);
   }
 
+
   /**
    * Unmittelbar vor Abschicken einer lokalen Notifikation sollte; erst ab
    * Android 13 (API-Level 33, "Tiramisu") relevant:
    * https://developer.android.com/about/versions/13/changes/notification-permission
    *
    * @return `true` gdw. die App die Berechtigung für lokale Notifikationen hat
-   */  
+   */
   private pruefeBerechtigung(): Promise<boolean> {
 
     return LocalNotifications.checkPermissions().then((res) => {
@@ -142,6 +148,7 @@ export class HomePage {
       return false;
     });
   }
+
 
   /**
    * Hilfsmethode für Anzeige einer Nachricht mit einem Toast.
