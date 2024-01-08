@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { ToastController, Platform } from '@ionic/angular';
 import { LocalNotifications } from '@capacitor/local-notifications';
 
+
 /**
- * Seite mit Buttons um einen Küchen-Timer zu starten, Demo für Verwendung von lokalen Notifikationen.<br>
- * <br>
+ * Seite mit Buttons um einen Küchen-Timer zu starten, Demo für Verwendung von lokalen Notifikationen.
+ * <br><br>
  *
  * Doku zu Capacitor-Plugin "local-notifications": https://capacitorjs.com/docs/apis/local-notifications
  */
@@ -142,7 +143,7 @@ export class HomePage {
 
       } else {
 
-        return true;
+          return true;
       }
 
       return false;
