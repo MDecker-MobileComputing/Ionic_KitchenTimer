@@ -119,6 +119,15 @@ export class HomePage {
    * Unmittelbar vor Abschicken einer lokalen Notifikation sollte; erst ab
    * Android 13 (API-Level 33, "Tiramisu") relevant:
    * https://developer.android.com/about/versions/13/changes/notification-permission
+   * <br><br>
+   *
+   * Log-Ausgaben können im Chrome-Browser unter der Pseudo-URL chrome://inspect/#devices
+   * eingesehen werden (warten, bis WebView für App "de...kuechentimer" angezeigt wird, dann
+   * auf Link "inspect" klicken).
+   * <br><br>
+   *
+   * Probleme mit Permissions unter Android 13:
+   * https://github.com/ionic-team/capacitor-plugins/pull/1189
    *
    * @return `true` gdw. die App die Berechtigung für lokale Notifikationen hat
    */
@@ -127,6 +136,8 @@ export class HomePage {
     return LocalNotifications.checkPermissions().then((res) => {
 
       if (res && res.display && res.display === "denied") {
+
+        console.log("Berechtigung für lokale Notifikationen wurde verweigert, versuche Berechtigung zu erfragen.");
 
         LocalNotifications.requestPermissions().then((res) => {
 
@@ -137,12 +148,14 @@ export class HomePage {
 
           } else {
 
+            console.log("Berechtigung für lokale Notifikationen wurde erteilt.");
             return true;
           }
         });
 
       } else {
 
+          console.log("Berechtigung für lokale Notifikationen war schon vorhanden.");
           return true;
       }
 
