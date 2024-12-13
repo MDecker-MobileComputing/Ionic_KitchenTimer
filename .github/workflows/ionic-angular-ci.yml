@@ -1,0 +1,35 @@
+name: Ionic Angular CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Code auschecken
+      uses: actions/checkout@v4 # neueste Version siehe https://github.com/actions/checkout/releases
+
+    - name: Node.js einrichten
+      uses: actions/setup-node@v4 # neueste Version siehe https://github.com/actions/setup-node/releases
+      with:
+        node-version: 22.x
+
+    - name: Node-Cache
+      uses: actions/cache@v4 # neueste Version siehe https://github.com/actions/cache/releases
+      with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-
+          ${{ runner.OS }}-
+
+    - name: Abhängigkeiten installieren
+      run: npm ci # ci: Continuous Integration, nur package-lock.json wird ausgewertet
+
+    - name: Ionic-App bauen
+      run: |
+        npm install -g @ionic/cli
+        ionic build
