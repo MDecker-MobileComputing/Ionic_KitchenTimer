@@ -26,8 +26,8 @@ export class HomePage {
   /**
    * Konstruktor für *Dependency Injection*.
    */
-  constructor(private toastController: ToastController,
-              private platform: Platform) {}
+  constructor( private toastController: ToastController,
+               private platform: Platform ) {}
 
 
   /**
@@ -36,24 +36,24 @@ export class HomePage {
    * @param minutenStr Laufzeit des Timers in Minuten als String
    *                   (seit Ionic 7 funktioniert es nicht mehr mit `number`)
    */
-  public async onButtonGeklickt( minutenStr: string) {
+  public async onButtonGeklickt( minutenStr: string ) {
 
     let minuten: number = parseInt(minutenStr);
 
-    if (this.istPlatformOkay() == false) {
+    if ( this.istPlatformOkay() == false ) {
 
       return;
     }
 
     const hatBerechtigung = await this.pruefeBerechtigung();
-    if (hatBerechtigung === false) {
+    if ( hatBerechtigung === false ) {
 
       return;
     }
 
-    this.timerEinplanen(minuten);
+    this.timerEinplanen( minuten );
 
-    this.zeigeToast(`Timer mit ${minuten} Minuten Laufzeit gestartet.`);
+    this.zeigeToast( `Timer mit ${minuten} Minuten Laufzeit gestartet.` );
   }
 
 
@@ -74,14 +74,14 @@ export class HomePage {
 
     //this.zeigeToast(`platformsArray: ${platformsArray}`);
 
-    if (platformsArray.includes("android")) {
+    if ( platformsArray.includes("android") ) {
 
       return true;
 
     } else {
 
-      console.log(`Betriebssysteme: ${platformsArray}`);
-      this.zeigeToast("Auf dem aktuellen Betriebssystem werden keine lokalen Notifikationen unterstützt.");
+      console.log( `Betriebssysteme: ${platformsArray}` );
+      this.zeigeToast( "Auf dem aktuellen Betriebssystem werden keine lokalen Notifikationen unterstützt." );
       return false;
     }
   }
@@ -93,13 +93,13 @@ export class HomePage {
    *
    * @param minuten Laufzeit des Timers in Minuten
    */
-  private async timerEinplanen(minuten: number) {
+  private async timerEinplanen( minuten: number ) {
 
-    const id = Math.floor((Math.random() * 100) + 1);
+    const id = Math.floor( (Math.random() * 100) + 1 );
 
     const nowMillis = Date.now();
     const atMillis  = nowMillis + minuten*this.MILLISECONDS_PRO_MINUTE;
-    const atDate    = new Date(atMillis);
+    const atDate    = new Date( atMillis );
 
     await LocalNotifications.schedule({ notifications:
       [{
@@ -111,7 +111,7 @@ export class HomePage {
        }]
      });
 
-     console.log(`Timer für ${atDate} wurde eingeplant.`);
+     console.log( `Timer für ${atDate} wurde eingeplant.` );
   }
 
 
@@ -133,29 +133,29 @@ export class HomePage {
    */
   private pruefeBerechtigung(): Promise<boolean> {
 
-    return LocalNotifications.checkPermissions().then((res) => {
+    return LocalNotifications.checkPermissions().then( (res) => {
 
-      if (res && res.display && res.display === "denied") {
+      if ( res && res.display && res.display === "denied" ) {
 
-        console.log("Berechtigung für lokale Notifikationen wurde verweigert, versuche Berechtigung zu erfragen.");
+        console.log( "Berechtigung für lokale Notifikationen wurde verweigert, versuche Berechtigung zu erfragen." );
 
-        LocalNotifications.requestPermissions().then((res) => {
+        LocalNotifications.requestPermissions().then( (res) => {
 
-          if (res && res.display && res.display === "denied") {
+          if ( res && res.display && res.display === "denied" ) {
 
-            this.zeigeToast("Es können keine Timer erzeugt werden, weil die Berechtigung verweigert wurde.");
+            this.zeigeToast( "Es können keine Timer erzeugt werden, weil die Berechtigung verweigert wurde." );
             return false;
 
           } else {
 
-            console.log("Berechtigung für lokale Notifikationen wurde erteilt.");
+            console.log( "Berechtigung für lokale Notifikationen wurde erteilt." );
             return true;
           }
         });
 
       } else {
 
-          console.log("Berechtigung für lokale Notifikationen war schon vorhanden.");
+          console.log( "Berechtigung für lokale Notifikationen war schon vorhanden." );
           return true;
       }
 
@@ -169,7 +169,7 @@ export class HomePage {
    *
    * @param nachricht In Toast anzuzeigender Text
    */
-  private async zeigeToast(nachricht: string) {
+  private async zeigeToast( nachricht: string ) {
 
     const toast = await this.toastController.create({
       message : nachricht,

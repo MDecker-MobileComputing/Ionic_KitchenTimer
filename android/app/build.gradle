@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     namespace "de.mide.ionic.kuechentimer"
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "de.mide.ionic.kuechentimer"
         minSdkVersion rootProject.ext.minSdkVersion
