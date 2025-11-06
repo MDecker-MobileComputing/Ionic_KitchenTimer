@@ -15,7 +15,7 @@ jobs:
     - name: Node.js einrichten
       uses: actions/setup-node@v4 # neueste Version siehe https://github.com/actions/setup-node/releases
       with:
-        node-version: 22.x
+        node-version: 24.x
 
     - name: Node-Cache
       uses: actions/cache@v4 # neueste Version siehe https://github.com/actions/cache/releases

@@ -1,9 +1,9 @@
-# Ionic-App "Küchen-Timer" (Titchen Timer) #
+# Ionic-App "Küchen-Timer" (Kitchen Timer) #
 
 <br>
 
-Simple [Ionic](https://ionicframework.com/) app with [Capacitor](https://capacitorjs.com/docs) to demonstrate 
-the usage of the plugin for [local-notifications](https://capacitorjs.com/docs/apis/local-notifications).
+Diese Repository enthält ein [Ionic](https://ionicframework.com/)/Angular-Projekt für eine mobile App.
+Die App demonstriert das Plugin [local-notifications](https://capacitorjs.com/docs/apis/local-notifications).
 
 <br>
 
@@ -13,7 +13,7 @@ the usage of the plugin for [local-notifications](https://capacitorjs.com/docs/a
 
 <br>
 
-![Screenshot 1](screenshot_1.png) &nbsp;  ![Screenshot 2](screenshot_2.png) 
+![Screenshot 1](screenshot_1.png) &nbsp;  ![Screenshot 2](screenshot_2.png)
 
 <br>
 
