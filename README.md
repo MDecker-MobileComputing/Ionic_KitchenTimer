@@ -5,6 +5,13 @@
 Diese Repository enthält ein [Ionic](https://ionicframework.com/)/Angular-Projekt für eine mobile App.
 Die App demonstriert das Plugin [local-notifications](https://capacitorjs.com/docs/apis/local-notifications).
 
+Damit die mit dem Plugin erzeugten lokalen Notifikationen funktionieren, müssen diese unter Android für
+die App erlaubt werden: `Settings | Notifications | App notifications`
+
+<br>
+
+![Screenshot von Einstellungen](screenshot_AndroidSettings.png)
+
 <br>
 
 ----
