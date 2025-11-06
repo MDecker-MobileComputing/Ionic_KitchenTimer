@@ -13,7 +13,7 @@ Die App demonstriert das Plugin [local-notifications](https://capacitorjs.com/do
 
 <br>
 
-![Screenshot 1](screenshot_1.png) &nbsp;  ![Screenshot 2](screenshot_2.png)
+![Screenshot 1](screenshot_1.png)
 
 <br>
 
